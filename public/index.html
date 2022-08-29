@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tankedazhan</title>
+    <style></style>
+  </head>
+
+  <body>
+    <div id="box"></div>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+    <script>
+      const playerDirection = {
+        INIT_TANK_DOWN: "init-tank-down",
+        INIT_TANK_RIGHT: "init-tank-right",
+        INIT_TANK_LEFT: "init-tank-left",
+        INIT_TANK_UP: "init-tank-up",
+        LEVEL2_TANK_DOWN: "level2-tank-down",
+        LEVEL2_TANK_UP: "level2-tank-up",
+        LEVEL2_TANK_LEFT: "level2-tank-left",
+        LEVEL2_TANK_RIGHT: "level2-tank-right",
+        LEVEL3_TANK_DOWN: "level3-tank-down",
+        LEVEL3_TANK_UP: "level3-tank-up",
+        LEVEL3_TANK_LEFT: "level3-tank-left",
+        LEVEL3_TANK_RIGHT: "level3-tank-right",
+        LEVEL4_TANK_DOWN: "level4-tank-down",
+        LEVEL4_TANK_UP: "level4-tank-up",
+        LEVEL4_TANK_LEFT: "level4-tank-left",
+        LEVEL4_TANK_RIGHT: "level4-tank-right",
+      };
+
+      const scale = {
+        X: 2,
+        Y: 2,
+      };
+
+      const defaultSpeed = {
+        vx: 0,
+        vy: 0,
+      };
+
+      function keyboard(value) {
+        let key = {};
+        key.value = value;
+        key.isDown = false;
+        key.isUp = true;
+        key.press = undefined;
+        key.release = undefined;
+        //The `downHandler`
+        key.downHandler = (event) => {
+          if (event.key === key.value) {
+            if (key.isUp && key.press) key.press();
+            key.isDown = true;
+            key.isUp = false;
+            event.preventDefault();
+          }
+        };
+
+        //The `upHandler`
+        key.upHandler = (event) => {
+          if (event.key === key.value) {
+            if (key.isDown && key.release) key.release();
+            key.isDown = false;
+            key.isUp = true;
+            event.preventDefault();
+          }
+        };
+
+        //Attach event listeners
+        const downListener = key.downHandler.bind(key);
+        const upListener = key.upHandler.bind(key);
+
+        window.addEventListener("keydown", downListener, false);
+        window.addEventListener("keyup", upListener, false);
+
+        // Detach event listeners
+        key.unsubscribe = () => {
+          window.removeEventListener("keydown", downListener);
+          window.removeEventListener("keyup", upListener);
+        };
+
+        return key;
+      }
+
+      function TankWar({ width, height, element }) {
+        this.width = width;
+        this.height = height;
+        this.element = element;
+        this.player = null;
+        this.status = {
+          init: 0,
+          padding: 1,
+          paddingEnd: 2,
+        };
+        this.life = 1;
+        this.application = null;
+        this.init();
+      }
+
+      TankWar.prototype.init = function () {
+        const { width, height, element } = this;
+
+        this.application = new PIXI.Application({ width, height });
+        const dom = document.getElementById(element);
+        dom.appendChild(this.application.view);
+        this.render();
+      };
+
+      TankWar.prototype.play = function (delta) {
+        this.player.x += this.player.vx;
+        this.player.y += this.player.vy;
+      };
+
+      TankWar.prototype.direction = function (dir) {
+        const playerDir = this.player.children;
+        for (let i = 0; i < playerDir.length; i++) {
+          if (playerDir[i].name === dir) {
+            playerDir[i].visible = true;
+          } else {
+            playerDir[i].visible = false;
+          }
+        }
+      };
+
+      TankWar.prototype.move = function () {
+        let left = keyboard("ArrowLeft"),
+          up = keyboard("ArrowUp"),
+          right = keyboard("ArrowRight"),
+          down = keyboard("ArrowDown");
+
+        left.press = () => {
+          this.player.vx = -1;
+          this.player.vy = 0;
+          this.direction(playerDirection.INIT_TANK_LEFT);
+        };
+
+        left.release = () => {
+          if (!right.isDown && this.player.vy === 0) {
+            this.player.vx = 0;
+          }
+        };
+
+        up.press = () => {
+          this.player.vy = -1;
+          this.player.vx = 0;
+          this.direction(playerDirection.INIT_TANK_UP);
+        };
+        up.release = () => {
+          if (!down.isDown && this.player.vx === 0) {
+            this.player.vy = 0;
+          }
+        };
+
+        right.press = () => {
+          this.player.vx = 1;
+          this.player.vy = 0;
+          this.direction(playerDirection.INIT_TANK_RIGHT);
+        };
+        right.release = () => {
+          if (!left.isDown && this.player.vy === 0) {
+            this.player.vx = 0;
+          }
+        };
+
+        down.press = () => {
+          this.player.vy = 1;
+          this.player.vx = 0;
+          this.direction(playerDirection.INIT_TANK_DOWN);
+        };
+        down.release = () => {
+          if (!up.isDown && this.player.vx === 0) {
+            this.player.vy = 0;
+          }
+        };
+      };
+
+      TankWar.prototype.render = function () {
+        const { INIT_TANK_DOWN } = playerDirection;
+        const { vx, vy } = defaultSpeed;
+        const that = this;
+        const loader = new PIXI.Loader();
+        loader
+          .add("tank", "./tankedazhan.png")
+          .add("spaceship", "tankedazhan.json");
+        loader.load((loader, resource) => {
+          console.log(resource);
+          const id = resource.spaceship.spritesheet.animations;
+          this.player = new PIXI.Container();
+          Object.keys(playerDirection).forEach((item, index) => {
+            let tankDir = new PIXI.AnimatedSprite(id[playerDirection[item]]);
+            tankDir.visible =
+              playerDirection[item] === playerDirection.INIT_TANK_DOWN;
+            tankDir.name = playerDirection[item];
+            this.player.addChild(tankDir);
+          });
+          this.player.life = this.life;
+          this.player.scale.x = scale.X;
+          this.player.scale.y = scale.Y;
+          this.player.vx = vx;
+          this.player.vy = vy;
+          this.move();
+          this.gun();
+          this.application.stage.addChild(this.player);
+          this.application.ticker.add(function (delta) {
+            that.play(delta);
+          });
+        });
+      };
+
+      TankWar.prototype.gun = function () {
+        const gun = new PIXI.Container();
+        const graphics = new PIXI.Graphics();
+        graphics.beginFill(0xffffff);
+        graphics.drawRect(0, 0, 3, 3);
+        graphics.endFill();
+        gun.addChild(graphics);
+        gun.x = 14;
+        gun.y = 30;
+        console.log(gun);
+        this.application.stage.addChild(gun);
+      };
+
+      TankWar.prototype.materials = function () {};
+
+      const tankWar = new TankWar({
+        width: 880,
+        height: 800,
+        element: "box",
+      });
+    </script>
+  </body>
+</html>
