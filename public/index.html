@@ -41,6 +41,39 @@
         vy: 0,
       };
 
+      function hitTestRectangle(r1, r2) {
+        let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+        hit = false;
+        r1.centerX = r1.x + r1.width / 2;
+        r1.centerY = r1.y + r1.height / 2;
+        r2.centerX = r2.x + r2.width / 2;
+        r2.centerY = r2.y + r2.height / 2;
+
+        r1.halfWidth = r1.width / 2;
+        r1.halfHeight = r1.height / 2;
+        r2.halfWidth = r2.width / 2;
+        r2.halfHeight = r2.height / 2;
+
+        vx = r1.centerX - r2.centerX;
+        vy = r1.centerY - r2.centerY;
+
+        combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+        combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+        if (Math.abs(vx) < combinedHalfWidths) {
+          if (Math.abs(vy) < combinedHalfHeights) {
+            hit = true;
+          } else {
+            hit = false;
+          }
+        } else {
+          hit = false;
+        }
+
+        return hit;
+      }
+
       function keyboard(value) {
         let key = {};
         key.value = value;
@@ -94,8 +127,17 @@
           padding: 1,
           paddingEnd: 2,
         };
+        this.direction = {
+          upIsDown: false,
+          leftIsDown: true,
+          downIsDown: true,
+          rightIsDown: true,
+        };
         this.life = 1;
         this.application = null;
+        this.gun = null;
+        this.start = true;
+        this.wallArr = null;
         this.init();
       }
 
@@ -109,11 +151,17 @@
       };
 
       TankWar.prototype.play = function (delta) {
+        const { children } = this.gun;
+        if(children.length !==0) {
+          children[0].x += children[0].vx;
+          children[0].y += children[0].vy;
+        };
         this.player.x += this.player.vx;
         this.player.y += this.player.vy;
+        
       };
 
-      TankWar.prototype.direction = function (dir) {
+      TankWar.prototype.tankDirection = function (dir) {
         const playerDir = this.player.children;
         for (let i = 0; i < playerDir.length; i++) {
           if (playerDir[i].name === dir) {
@@ -124,54 +172,87 @@
         }
       };
 
-      TankWar.prototype.move = function () {
+      TankWar.prototype.handle = function () {
         let left = keyboard("ArrowLeft"),
           up = keyboard("ArrowUp"),
           right = keyboard("ArrowRight"),
           down = keyboard("ArrowDown");
+        keyz = keyboard("z");
+
+        keyz.press = () => {
+          this.fire();
+        };
+
+        keyz.release = () => {
+          console.log("reslease");
+        };
 
         left.press = () => {
           this.player.vx = -1;
           this.player.vy = 0;
-          this.direction(playerDirection.INIT_TANK_LEFT);
+          this.tankDirection(playerDirection.INIT_TANK_LEFT);
         };
 
         left.release = () => {
           if (!right.isDown && this.player.vy === 0) {
             this.player.vx = 0;
+            this.direction = {
+              upIsDown: true,
+              leftIsDown: true,
+              rightIsDown: right.isDown,
+              downIsDown: true,
+            };
           }
         };
 
         up.press = () => {
           this.player.vy = -1;
           this.player.vx = 0;
-          this.direction(playerDirection.INIT_TANK_UP);
+          this.tankDirection(playerDirection.INIT_TANK_UP);
         };
         up.release = () => {
           if (!down.isDown && this.player.vx === 0) {
             this.player.vy = 0;
+            this.direction = {
+              upIsDown: true,
+              leftIsDown: true,
+              rightIsDown: true,
+              downIsDown: down.isDown,
+            };
           }
         };
 
         right.press = () => {
           this.player.vx = 1;
           this.player.vy = 0;
-          this.direction(playerDirection.INIT_TANK_RIGHT);
+          this.tankDirection(playerDirection.INIT_TANK_RIGHT);
         };
         right.release = () => {
           if (!left.isDown && this.player.vy === 0) {
             this.player.vx = 0;
+            this.direction = {
+              upIsDown: true,
+              leftIsDown: left.isDown,
+              rightIsDown: true,
+              downIsDown: true,
+            };
           }
         };
 
         down.press = () => {
           this.player.vy = 1;
           this.player.vx = 0;
-          this.direction(playerDirection.INIT_TANK_DOWN);
+          this.tankDirection(playerDirection.INIT_TANK_DOWN);
         };
         down.release = () => {
           if (!up.isDown && this.player.vx === 0) {
             this.player.vy = 0;
+            this.direction = {
+              upIsDown: up.isDown,
+              leftIsDown: true,
+              rightIsDown: true,
+              downIsDown: true,
+            };
           }
         };
       };
@@ -200,26 +281,103 @@
           this.player.scale.y = scale.Y;
           this.player.vx = vx;
           this.player.vy = vy;
-          this.move();
-          this.gun();
+          this.player.x = 500;
+          this.player.y = 500;
           this.application.stage.addChild(this.player);
           this.application.ticker.add(function (delta) {
             that.play(delta);
           });
+          this.gun = new PIXI.Container();
+          this.application.stage.addChild(this.gun);
+          this.handle();
+          this.createAirWall();
         });
       };
 
-      TankWar.prototype.gun = function () {
-        const gun = new PIXI.Container();
-        const graphics = new PIXI.Graphics();
-        graphics.beginFill(0xffffff);
-        graphics.drawRect(0, 0, 3, 3);
-        graphics.endFill();
-        gun.addChild(graphics);
-        gun.x = 14;
-        gun.y = 30;
-        console.log(gun);
-        this.application.stage.addChild(gun);
+      TankWar.prototype.createAirWall = function () {
+        const container = new PIXI.Container();
+        this.application.stage.addChild(container);
+
+        const leftWall = new PIXI.Graphics();
+        leftWall.beginFill(0xde3249);
+        leftWall.drawRect(0, 0, 10, this.height);
+        leftWall.position.set(0, 0);
+        leftWall.endFill();
+        container.addChild(leftWall);
+
+        const rightWall = new PIXI.Graphics();
+        rightWall.beginFill(0xde3249);
+        rightWall.drawRect(0, 0, 10, this.height);
+        rightWall.endFill();
+        rightWall.position.set((this.width) - 10, 0);
+        container.addChild(rightWall);
+
+        const topWall = new PIXI.Graphics();
+        topWall.beginFill(0xde3249);
+        topWall.drawRect(0, 0, this.width, 10);
+        topWall.position.set(0, 0);
+        topWall.endFill();
+        container.addChild(topWall);
+  
+        const bottomWall = new PIXI.Graphics();
+        bottomWall.beginFill(0xde3249);
+        bottomWall.drawRect(0, 0, this.width, 10);
+        bottomWall.position.set(0, (this.height) - 10);
+        bottomWall.endFill();
+
+        this.wallArr = {
+          wall: container,
+          leftWall: leftWall,
+          rightWall: rightWall,
+          topWall: topWall,
+          bottomWall: bottomWall,
+        };
+
+        container.addChild(bottomWall);
+      };
+
+      TankWar.prototype.fire = function () {
+        const { upIsDown, leftIsDown, downIsDown, rightIsDown } =
+          this.direction;
+        const { vx, vy } = defaultSpeed;
+        const {x,y,width,height} = this.player;
+        const gunX = x+width;
+        const gunY = y+height;
+        console.log(x,width,y,height);
+        console.log(gunX,gunY)
+        if ((this.gun.children.length === 0 && this.gun.children < 2) ) {
+          const graphics = new PIXI.Graphics();
+          graphics.beginFill(0xffffff);
+          graphics.drawRect(0, 0, 3, 3);
+          graphics.endFill();
+          this.gun.addChild(graphics);
+
+          if (!upIsDown) {
+            console.log(graphics);
+            graphics.vx = 0;
+            graphics.vy = 4;
+            graphics.x = gunX - width/2 - 2;
+            graphics.y = gunY;
+          }
+          else if (!leftIsDown){
+            graphics.vx = 4;
+            graphics.vy = 0;
+            graphics.x = gunX;
+            graphics.y = gunY - height/2 - 2;
+          }
+          else if(!rightIsDown){
+            graphics.vx = -4;
+            graphics.vy = 0;
+            graphics.x = gunX - width - 2;
+            graphics.y = gunY - height/2 - 2;
+          }
+          else if(!downIsDown){
+            graphics.vx = 0;
+            graphics.vy = -4;
+            graphics.x = gunX - width/2 - 3;
+            graphics.y = gunY - height - 2;
+          }
+        }
       };
 
       TankWar.prototype.materials = function () {};
