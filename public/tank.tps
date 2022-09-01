@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>tankedazhan.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -173,6 +173,44 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/baozha-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/baozha-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/baozha-2.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type1-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type1-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type2-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type2-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type3-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type3-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type4-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type4-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type1-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type1-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type2-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type2-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type3-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type3-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type4-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type4-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type1-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type1-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type2-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type2-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type3-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type3-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type4-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type4-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type1-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type1-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type2-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type2-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type3-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type3-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type4-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type4-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/home-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/home-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/home-2.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/init-tank-down-0.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/init-tank-down-1.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/init-tank-left-0.png</key>
@@ -181,6 +219,37 @@
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/init-tank-right-1.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/init-tank-up-0.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/init-tank-up-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level2-tank-down-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level2-tank-down-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level2-tank-left-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level2-tank-left-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level2-tank-right-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level2-tank-right-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level2-tank-up-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level2-tank-up-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level3-tank-down-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level3-tank-down-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level3-tank-left-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level3-tank-left-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level3-tank-right-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level3-tank-right-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level3-tank-up-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level3-tank-up-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-down-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-down-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-left-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-left-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-right-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-right-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-up-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-up-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-fenshu.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-houqiang.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-shengji.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-shijianzanting.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-shouqiang.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-toukui.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-zhadan.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -195,6 +264,27 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/jifenban-difangtank.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/jifenban-title.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/map-dixing-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/map-dixing-cao.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/map-dixing-gang.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/map-dixing-heliu.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/map-dixing-qiang.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -206,6 +296,82 @@
             <filename>C:/Users/wei/Desktop/坦克大战素材/init-tank-up-0.png</filename>
             <filename>C:/Users/wei/Desktop/坦克大战素材/init-tank-down-0.png</filename>
             <filename>C:/Users/wei/Desktop/坦克大战素材/init-tank-down-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level2-tank-left-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level2-tank-left-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level2-tank-right-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level2-tank-right-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level2-tank-down-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level2-tank-down-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level3-tank-left-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level3-tank-left-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level3-tank-up-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level3-tank-up-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level3-tank-right-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level3-tank-right-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level3-tank-down-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level3-tank-down-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level4-tank-left-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level4-tank-left-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level4-tank-up-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level4-tank-up-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level4-tank-right-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level4-tank-right-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level4-tank-down-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level4-tank-down-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level2-tank-up-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/level2-tank-up-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/zhuangbei-shouqiang.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/zhuangbei-toukui.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/zhuangbei-fenshu.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/zhuangbei-houqiang.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/zhuangbei-shengji.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/zhuangbei-shijianzanting.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/zhuangbei-zhadan.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/home-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/baozha-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/baozha-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/baozha-2.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/home-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/home-2.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/map-dixing-cao.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/map-dixing-gang.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/map-dixing-heliu.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/map-dixing-qiang.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/map-dixing-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/jifenban-difangtank.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/jifenban-title.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type1-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type1-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type1-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type1-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type1-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type1-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type1-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type1-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type2-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type2-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type2-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type2-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type2-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type2-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type3-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type3-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type3-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type3-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type3-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type3-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type3-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type3-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type4-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-left-level1-type4-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type4-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-down-level1-type4-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type4-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-right-level1-type4-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type4-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type4-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type2-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type2-1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

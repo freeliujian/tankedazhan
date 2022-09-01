@@ -12,7 +12,37 @@
     <div id="box"></div>
     <script src="https://pixijs.download/release/pixi.js"></script>
     <script>
-      const playerDirection = {
+      // const level = {
+      //   level1:[
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      //   ]
+      // }
+      const materials = {
+        wall:1,
+        grass:2,
+        steel:3,
+        river:4,
+      }
+      const constants = {
         INIT_TANK_DOWN: "init-tank-down",
         INIT_TANK_RIGHT: "init-tank-right",
         INIT_TANK_LEFT: "init-tank-left",
@@ -29,6 +59,7 @@
         LEVEL4_TANK_UP: "level4-tank-up",
         LEVEL4_TANK_LEFT: "level4-tank-left",
         LEVEL4_TANK_RIGHT: "level4-tank-right",
+        BOOM:'baozha',
       };
 
       const scale = {
@@ -121,6 +152,7 @@
         this.width = width;
         this.height = height;
         this.element = element;
+        this.loader = null;
         this.player = null;
         this.status = {
           init: 0,
@@ -151,10 +183,30 @@
       };
 
       TankWar.prototype.play = function (delta) {
-        const { children } = this.gun;
+        const { gun, wallArr , removeGun} = this;
+        const { children } = gun;
+        const { leftWall, rightWall, topWall, bottomWall } = wallArr;
         if(children.length !==0) {
-          children[0].x += children[0].vx;
-          children[0].y += children[0].vy;
+          const getGun = gun.getChildAt(0);
+          getGun.x +=getGun.vx;
+          getGun.y +=getGun.vy;
+          if(hitTestRectangle(getGun,leftWall)){
+            console.log("leftWall")
+           
+            removeGun.apply(this, gun);
+          }
+          if(hitTestRectangle(getGun,rightWall)){
+            console.log("rightWall")
+            removeGun.apply(this, gun);
+          }
+          if(hitTestRectangle(getGun,topWall)){
+            console.log("topWall")
+            removeGun.apply(this, gun);
+          }
+          if(hitTestRectangle(getGun,bottomWall)){
+            console.log("bottomWall")
+            removeGun.apply(this, gun);
+          }
         };
         this.player.x += this.player.vx;
         this.player.y += this.player.vy;
@@ -184,13 +236,13 @@
         };
 
         keyz.release = () => {
-          console.log("reslease");
+          // console.log("reslease");
         };
 
         left.press = () => {
           this.player.vx = -1;
           this.player.vy = 0;
-          this.tankDirection(playerDirection.INIT_TANK_LEFT);
+          this.tankDirection(constants.INIT_TANK_LEFT);
         };
 
         left.release = () => {
@@ -208,7 +260,7 @@
         up.press = () => {
           this.player.vy = -1;
           this.player.vx = 0;
-          this.tankDirection(playerDirection.INIT_TANK_UP);
+          this.tankDirection(constants.INIT_TANK_UP);
         };
         up.release = () => {
           if (!down.isDown && this.player.vx === 0) {
@@ -225,7 +277,7 @@
         right.press = () => {
           this.player.vx = 1;
           this.player.vy = 0;
-          this.tankDirection(playerDirection.INIT_TANK_RIGHT);
+          this.tankDirection(constants.INIT_TANK_RIGHT);
         };
         right.release = () => {
           if (!left.isDown && this.player.vy === 0) {
@@ -242,7 +294,7 @@
         down.press = () => {
           this.player.vy = 1;
           this.player.vx = 0;
-          this.tankDirection(playerDirection.INIT_TANK_DOWN);
+          this.tankDirection(constants.INIT_TANK_DOWN);
         };
         down.release = () => {
           if (!up.isDown && this.player.vx === 0) {
@@ -258,22 +310,23 @@
       };
 
       TankWar.prototype.render = function () {
-        const { INIT_TANK_DOWN } = playerDirection;
+        const { INIT_TANK_DOWN } = constants;
         const { vx, vy } = defaultSpeed;
         const that = this;
-        const loader = new PIXI.Loader();
-        loader
+        that.loader = new PIXI.Loader();
+        that.loader
           .add("tank", "./tankedazhan.png")
           .add("spaceship", "tankedazhan.json");
-        loader.load((loader, resource) => {
-          console.log(resource);
+        that.loader.load((loader, resource) => {
           const id = resource.spaceship.spritesheet.animations;
           this.player = new PIXI.Container();
-          Object.keys(playerDirection).forEach((item, index) => {
-            let tankDir = new PIXI.AnimatedSprite(id[playerDirection[item]]);
+          Object.keys(constants).forEach((item, index) => {
+            let tankDir = new PIXI.AnimatedSprite(id[constants[item]]);
+            tankDir.animationSpeed = 0.2;
+            tankDir.play();
             tankDir.visible =
-              playerDirection[item] === playerDirection.INIT_TANK_DOWN;
-            tankDir.name = playerDirection[item];
+              constants[item] === constants.INIT_TANK_DOWN;
+            tankDir.name = constants[item];
             this.player.addChild(tankDir);
           });
           this.player.life = this.life;
@@ -281,8 +334,9 @@
           this.player.scale.y = scale.Y;
           this.player.vx = vx;
           this.player.vy = vy;
-          this.player.x = 500;
+          this.player.x = 30;
           this.player.y = 500;
+
           this.application.stage.addChild(this.player);
           this.application.ticker.add(function (delta) {
             that.play(delta);
@@ -291,6 +345,7 @@
           this.application.stage.addChild(this.gun);
           this.handle();
           this.createAirWall();
+           
         });
       };
 
@@ -300,29 +355,29 @@
 
         const leftWall = new PIXI.Graphics();
         leftWall.beginFill(0xde3249);
-        leftWall.drawRect(0, 0, 10, this.height);
+        leftWall.drawRect(0, 0, 5, this.height);
         leftWall.position.set(0, 0);
         leftWall.endFill();
         container.addChild(leftWall);
 
         const rightWall = new PIXI.Graphics();
         rightWall.beginFill(0xde3249);
-        rightWall.drawRect(0, 0, 10, this.height);
+        rightWall.drawRect(0, 0, 5, this.height);
         rightWall.endFill();
-        rightWall.position.set((this.width) - 10, 0);
+        rightWall.position.set((this.width) - 5, 0);
         container.addChild(rightWall);
 
         const topWall = new PIXI.Graphics();
         topWall.beginFill(0xde3249);
-        topWall.drawRect(0, 0, this.width, 10);
+        topWall.drawRect(0, 0, this.width, 5);
         topWall.position.set(0, 0);
         topWall.endFill();
         container.addChild(topWall);
   
         const bottomWall = new PIXI.Graphics();
         bottomWall.beginFill(0xde3249);
-        bottomWall.drawRect(0, 0, this.width, 10);
-        bottomWall.position.set(0, (this.height) - 10);
+        bottomWall.drawRect(0, 0, this.width, 5);
+        bottomWall.position.set(0, (this.height) - 5);
         bottomWall.endFill();
 
         this.wallArr = {
@@ -343,8 +398,8 @@
         const {x,y,width,height} = this.player;
         const gunX = x+width;
         const gunY = y+height;
-        console.log(x,width,y,height);
-        console.log(gunX,gunY)
+        // console.log(x,width,y,height);
+        // console.log(gunX,gunY)
         if ((this.gun.children.length === 0 && this.gun.children < 2) ) {
           const graphics = new PIXI.Graphics();
           graphics.beginFill(0xffffff);
@@ -380,7 +435,42 @@
         }
       };
 
-      TankWar.prototype.materials = function () {};
+      TankWar.prototype.removeGun = function () {
+        const {gun} = this;
+        const getGun = gun.getChildAt(0);
+        gun.removeChildren();
+        this.boom(getGun.x,getGun.y)
+      }
+      
+      TankWar.prototype.boom = function (x,y) {
+        const {BOOM} = constants;
+        const id = this.loader.resources.spaceship.spritesheet.animations;
+        console.log(id[BOOM],BOOM)
+        const boom = new PIXI.AnimatedSprite(id[BOOM]);
+        boom.animationSpeed = 0.2;
+        boom.play();
+        boom.name= BOOM
+        boom.loop = false;
+        boom.onComplete = () => {
+          const getBOOM = this.application.stage.getChildByName(BOOM);
+          this.application.stage.removeChild(getBOOM);         
+        }
+        boom.scale.x = 2;
+        boom.scale.y = 2;
+        boom.anchor.set(0.5,0.5);
+        console.log(x,y)
+        boom.x = x;
+        boom.y = y;
+        this.application.stage.addChild(boom);
+      }
+
+      TankWar.prototype.createMap = function () {
+
+      };
+
+      TankWar.prototype.materials = function () {
+
+      };
 
       const tankWar = new TankWar({
         width: 880,
