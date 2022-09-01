@@ -243,6 +243,8 @@
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-right-1.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-up-0.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/level4-tank-up-1.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/wudi-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/wudi-1.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-fenshu.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-houqiang.png</key>
             <key type="filename">C:/Users/wei/Desktop/坦克大战素材/zhuangbei-shengji.png</key>
@@ -261,6 +263,38 @@
                 <rect>4,4,8,8</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,8,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/chusheng-0.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/chusheng-1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,5,8,9</rect>
+                <key>scale9Paddings</key>
+                <rect>4,5,8,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/chusheng-2.png</key>
+            <key type="filename">C:/Users/wei/Desktop/坦克大战素材/chusheng-4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,9</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -372,6 +406,12 @@
             <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type4-1.png</filename>
             <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type2-0.png</filename>
             <filename>C:/Users/wei/Desktop/坦克大战素材/didui-tank-up-level1-type2-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/wudi-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/wudi-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/chusheng-0.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/chusheng-1.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/chusheng-2.png</filename>
+            <filename>C:/Users/wei/Desktop/坦克大战素材/chusheng-4.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
