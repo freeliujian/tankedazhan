@@ -67,6 +67,17 @@
         type: {
           BIRTH_CONTAINER: "birthContainer",
         },
+        texture: {
+          materials: {
+            ZHUANGBEI_FENSHU: "zhuangbei-fenshu.png",
+            ZHUANGBEI_HOUQIANG: "zhuangbei-houqiang.png",
+            ZHUANGBEI_SHENGJI: "zhuangbei-shengji.png",
+            ZHUANGBEI_SHIJIANZANTING: "zhuangbei-shijianzanting.png",
+            ZHUANGBEI_SHOUQIANG: "zhuangbei-shouqiang.png",
+            ZHUANGBEI_TOUKUI: "zhuangbei-toukui.png",
+            ZHUANGBEI_ZHADAN: "zhuangbei-zhadan.png",
+          },
+        },
       };
 
       const scale = {
@@ -162,6 +173,8 @@
         this.loader = null;
         this.player = null;
         this.wudiSprite = null;
+        this.zhuangbeiContainer = null;
+        this.badTankContainer = null;
         this.status = {
           init: 0,
           padding: 1,
@@ -191,7 +204,7 @@
       };
 
       TankWar.prototype.play = function (delta) {
-        const { gun, wallArr, removeGun } = this;
+        const { gun, wallArr, removeGun, zhuangbeiContainer } = this;
         const { children } = gun;
         const { leftWall, rightWall, topWall, bottomWall } = wallArr;
         if (children.length !== 0) {
@@ -215,13 +228,83 @@
             console.log("bottomWall");
             removeGun.apply(this, gun);
           }
-        };
-        if(!!this.player){
+        }
+
+        if (this.zhuangbeiContainer && this.player) {
+          if (
+            hitTestRectangle(
+              this.player,
+              zhuangbeiContainer.getChildByName(
+                constants.texture.materials.ZHUANGBEI_FENSHU
+              )
+            )
+          ) {
+            console.log("加十分");
+          }
+          if (
+            hitTestRectangle(
+              this.player,
+              zhuangbeiContainer.getChildByName(
+                constants.texture.materials.ZHUANGBEI_HOUQIANG
+              )
+            )
+          ) {
+            console.log('总部加墙壁')
+          }
+          if (
+            hitTestRectangle(
+              this.player,
+              zhuangbeiContainer.getChildByName(
+                constants.texture.materials.ZHUANGBEI_SHENGJI
+              )
+            )
+          ) {
+          }
+          if (
+            hitTestRectangle(
+              this.player,
+              zhuangbeiContainer.getChildByName(
+                constants.texture.materials.ZHUANGBEI_SHIJIANZANTING
+              )
+            )
+          ) {
+          }
+          if (
+            hitTestRectangle(
+              this.player,
+              zhuangbeiContainer.getChildByName(
+                constants.texture.materials.ZHUANGBEI_SHOUQIANG
+              )
+            )
+          ) {
+          }
+          if (
+            hitTestRectangle(
+              this.player,
+              zhuangbeiContainer.getChildByName(
+                constants.texture.materials.ZHUANGBEI_TOUKUI
+              )
+            )
+          ) {
+            console.log("无敌");
+          }
+          if (
+            hitTestRectangle(
+              this.player,
+              zhuangbeiContainer.getChildByName(
+                constants.texture.materials.ZHUANGBEI_ZHADAN
+              )
+            )
+          ) {
+          }
+        }
+
+        if (!!this.player) {
           this.player.x += this.player.vx;
           this.player.y += this.player.vy;
         }
-        
-        if(!!this.wudiSprite){
+
+        if (!!this.wudiSprite) {
           this.wudiSprite.x += this.player.vx;
           this.wudiSprite.y += this.player.vy;
         }
@@ -331,11 +414,12 @@
           const birthAnimation = new PIXI.AnimatedSprite(id[BIRTH]);
           birthAnimation.name = `birthAnimation-${i}`;
           if (i === 4) {
-            birthAnimation.position.set(50,20);
+            birthAnimation.position.set(20, 30);
           } else {
             birthAnimation.x = i * 100;
             birthAnimation.y = 10;
           }
+          birthAnimation.anchor.set(0.5,0.5);
           birthAnimation.visible = false;
           birthAnimation.animationSpeed = 0.1;
           birthAnimation.play();
@@ -344,34 +428,40 @@
         birthContainer.scale.x = 1.2;
         birthContainer.scale.y = 1.2;
         this.application.stage.addChild(birthContainer);
-        birthContainer.getChildByName('birthAnimation-4')
-        console.log(birthContainer.getChildByName('birthAnimation-4'));
-        birthContainer.getChildByName('birthAnimation-4').visible = true;
+        birthContainer.getChildByName("birthAnimation-4");
+        console.log(birthContainer.getChildByName("birthAnimation-4"));
+        birthContainer.getChildByName("birthAnimation-4").visible = true;
         setTimeout(() => {
-          birthContainer.getChildByName('birthAnimation-4').visible = false;
-          this.wudi(id, 50, 20);
-          this.createdPlayer(id, 50, 20);
-        },2000)
+          birthContainer.getChildByName("birthAnimation-4").visible = false;
+          this.wudi(id, 20, 30);
+          this.createdPlayer(id, 20, 30);
+        }, 2000);
       };
 
-      TankWar.prototype.wudi = function (animationPosition,x,y) {
-        this.wudiSprite = new PIXI.AnimatedSprite(animationPosition[constants.animations.WUDI])
-        this.wudiSprite.position.set(x,y);
-        this.wudiSprite.scale.set(2,2);
-        // wudiSprite.anchor.set(0.5,0.5);
+      TankWar.prototype.wudi = function (animationPosition, x, y) {
+        this.wudiSprite = new PIXI.AnimatedSprite(
+          animationPosition[constants.animations.WUDI]
+        );
+        this.wudiSprite.position.set(x, y);
+        this.wudiSprite.scale.set(2, 2);
+        this.wudiSprite.anchor.set(0.5,0.5);
         this.wudiSprite.animationSpeed = 0.15;
         this.wudiSprite.play();
         this.application.stage.addChild(this.wudiSprite);
-      }
+      };
 
-      TankWar.prototype.createdPlayer = function (animationPosition,x,y) {
+      TankWar.prototype.createdPlayer = function (animationPosition, x, y) {
         const { vx, vy } = defaultSpeed;
         this.player = new PIXI.Container();
         Object.keys(constants.animations).forEach((item, index) => {
-          let tankDir = new PIXI.AnimatedSprite(animationPosition[constants.animations[item]]);
+          let tankDir = new PIXI.AnimatedSprite(
+            animationPosition[constants.animations[item]]
+          );
           tankDir.animationSpeed = 0.2;
+          tankDir.anchor.set(0.5,0.5);
           tankDir.play();
-          tankDir.visible = constants.animations[item] === constants.animations.INIT_TANK_DOWN;
+          tankDir.visible =
+            constants.animations[item] === constants.animations.INIT_TANK_DOWN;
           tankDir.name = constants.animations[item];
           this.player.addChild(tankDir);
         });
@@ -380,8 +470,7 @@
         this.player.scale.y = scale.Y;
         this.player.vx = vx;
         this.player.vy = vy;
-        this.player.position.set(x,y)
-
+        this.player.position.set(x, y);
         this.application.stage.addChild(this.player);
       };
 
@@ -395,6 +484,7 @@
         that.loader.load((loader, resource) => {
           const id = resource.spaceship.spritesheet.animations;
           this.birth(id);
+          this.materials();
           this.application.ticker.add(function (delta) {
             that.play(delta);
           });
@@ -464,26 +554,25 @@
           this.gun.addChild(graphics);
 
           if (!upIsDown) {
-            console.log(graphics);
             graphics.vx = 0;
             graphics.vy = 4;
-            graphics.x = gunX - width / 2 - 2;
-            graphics.y = gunY;
+            graphics.x = gunX - width - 2;
+            graphics.y = gunY - height + 10;
           } else if (!leftIsDown) {
             graphics.vx = 4;
             graphics.vy = 0;
-            graphics.x = gunX;
-            graphics.y = gunY - height / 2 - 2;
+            graphics.x = gunX - width + 10;
+            graphics.y = gunY - height - 2;
           } else if (!rightIsDown) {
             graphics.vx = -4;
             graphics.vy = 0;
-            graphics.x = gunX - width - 2;
-            graphics.y = gunY - height / 2 - 2;
+            graphics.x = gunX - width;
+            graphics.y = gunY - height;
           } else if (!downIsDown) {
             graphics.vx = 0;
             graphics.vy = -4;
-            graphics.x = gunX - width / 2 - 3;
-            graphics.y = gunY - height - 2;
+            graphics.x = gunX - width - 2;
+            graphics.y = gunY - height - 13;
           }
         }
       };
@@ -519,8 +608,25 @@
         //..
       };
 
+      TankWar.prototype.badTank = function () {
+        this.badTankContainer = new PIXI.Container();
+      };
+
       TankWar.prototype.materials = function () {
-        //..
+        const { materials } = constants.texture;
+        const id = this.loader.resources.spaceship.spritesheet;
+        this.zhuangbeiContainer = new PIXI.Container();
+        this.zhuangbeiContainer.scale.set(2, 2);
+        console.log( this.zhuangbeiContainer);
+        Object.keys(materials).map((item, i) => {
+          const zhuangbei = new PIXI.Sprite(id.textures[materials[item]]);
+          // zhuangbei.visible = false;
+          zhuangbei.position.set(40 * (i + 1), 40 * (i + 1));
+          zhuangbei.name = materials[item];
+          zhuangbei.anchor.set(0.5, 0.5);
+          this.zhuangbeiContainer.addChild(zhuangbei);
+        });
+        this.application.stage.addChild(this.zhuangbeiContainer);
       };
 
       const tankWar = new TankWar({
