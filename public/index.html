@@ -5,13 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>tankedazhan</title>
-    <style></style>
+    <style>
+      /* #box{
+        width: 500px;
+        height: 900px;
+        background: pink;
+      } */
+    </style>
   </head>
 
   <body>
     <div id="box"></div>
+    <div id="zuobiao">0,0</div>
     <script src="https://pixijs.download/release/pixi.js"></script>
     <script>
+      // 获取坐标
+      document.getElementById("box").onmousemove = (e) => {
+        const zuobiao = {
+          x: event.clientX - event.target.offsetLeft,
+          y: event.clientY - event.target.offsetTop,
+        };
+        document.getElementById(
+          "zuobiao"
+        ).innerHTML = `${zuobiao.x},${zuobiao.y}`;
+      };
+
       // const level = {
       //   level1:[
       //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -187,9 +205,10 @@
           rightIsDown: true,
         };
         this.life = 1;
+        this.score = 0;
         this.application = null;
         this.gun = null;
-        this.start = true;
+        this.panelContainer = null;
         this.wallArr = null;
         this.init();
       }
@@ -207,6 +226,29 @@
         const { gun, wallArr, removeGun, zhuangbeiContainer } = this;
         const { children } = gun;
         const { leftWall, rightWall, topWall, bottomWall } = wallArr;
+        const zhuangbeiName = constants.texture.materials;
+        const score = zhuangbeiContainer.getChildByName(
+          zhuangbeiName.ZHUANGBEI_FENSHU
+        );
+        const addWall = zhuangbeiContainer.getChildByName(
+          zhuangbeiName.ZHUANGBEI_HOUQIANG
+        );
+        const addLevel = zhuangbeiContainer.getChildByName(
+          zhuangbeiName.ZHUANGBEI_SHENGJI
+        );
+        const timeStop = zhuangbeiContainer.getChildByName(
+          constants.texture.materials.ZHUANGBEI_SHIJIANZANTING
+        );
+        const handGun = zhuangbeiContainer.getChildByName(
+          constants.texture.materials.ZHUANGBEI_SHOUQIANG
+        );
+        const invincible = zhuangbeiContainer.getChildByName(
+          constants.texture.materials.ZHUANGBEI_TOUKUI
+        );
+        const allBoom = zhuangbeiContainer.getChildByName(
+          constants.texture.materials.ZHUANGBEI_ZHADAN
+        );
+
         if (children.length !== 0) {
           const getGun = gun.getChildAt(0);
           getGun.x += getGun.vx;
@@ -230,72 +272,41 @@
           }
         }
 
-        if (this.zhuangbeiContainer && this.player) {
-          if (
-            hitTestRectangle(
-              this.player,
-              zhuangbeiContainer.getChildByName(
-                constants.texture.materials.ZHUANGBEI_FENSHU
-              )
-            )
-          ) {
+        if (this.zhuangbeiContainer && this.player && score) {
+          if (hitTestRectangle(this.player, score) && score.visible) {
             console.log("加十分");
+            this.score += 10;
+            score.visible = false;
           }
-          if (
-            hitTestRectangle(
-              this.player,
-              zhuangbeiContainer.getChildByName(
-                constants.texture.materials.ZHUANGBEI_HOUQIANG
-              )
-            )
-          ) {
-            console.log('总部加墙壁')
+          if (hitTestRectangle(this.player, addWall) && addWall.visible) {
+            console.log("总部加墙壁");
+            addWall.visible = false;
           }
-          if (
-            hitTestRectangle(
-              this.player,
-              zhuangbeiContainer.getChildByName(
-                constants.texture.materials.ZHUANGBEI_SHENGJI
-              )
-            )
-          ) {
+          if (hitTestRectangle(this.player, addLevel) && addLevel.visible) {
+            if (this.left < 3) {
+              this.life += 1;
+            } else {
+              this.score += 10;
+            }
+            addLevel.visible = false;
           }
-          if (
-            hitTestRectangle(
-              this.player,
-              zhuangbeiContainer.getChildByName(
-                constants.texture.materials.ZHUANGBEI_SHIJIANZANTING
-              )
-            )
-          ) {
+          if (hitTestRectangle(this.player, timeStop) && timeStop.visible) {
+            console.log("时间暂停");
+            timeStop.visible = false;
           }
-          if (
-            hitTestRectangle(
-              this.player,
-              zhuangbeiContainer.getChildByName(
-                constants.texture.materials.ZHUANGBEI_SHOUQIANG
-              )
-            )
-          ) {
+          if (hitTestRectangle(this.player, handGun) && handGun.visible) {
+            console.log("升满级");
+            this.life = 3;
+            handGun.visible = false;
           }
-          if (
-            hitTestRectangle(
-              this.player,
-              zhuangbeiContainer.getChildByName(
-                constants.texture.materials.ZHUANGBEI_TOUKUI
-              )
-            )
-          ) {
+          if (hitTestRectangle(this.player, invincible) && invincible.visible) {
             console.log("无敌");
+            this.life = 100;
+            invincible.visible = false;
           }
-          if (
-            hitTestRectangle(
-              this.player,
-              zhuangbeiContainer.getChildByName(
-                constants.texture.materials.ZHUANGBEI_ZHADAN
-              )
-            )
-          ) {
+          if (hitTestRectangle(this.player, allBoom) && allBoom.visible) {
+            console.log("全部炸死");
+            allBoom.visible = false;
           }
         }
 
@@ -419,7 +430,7 @@
             birthAnimation.x = i * 100;
             birthAnimation.y = 10;
           }
-          birthAnimation.anchor.set(0.5,0.5);
+          birthAnimation.anchor.set(0.5, 0.5);
           birthAnimation.visible = false;
           birthAnimation.animationSpeed = 0.1;
           birthAnimation.play();
@@ -444,7 +455,7 @@
         );
         this.wudiSprite.position.set(x, y);
         this.wudiSprite.scale.set(2, 2);
-        this.wudiSprite.anchor.set(0.5,0.5);
+        this.wudiSprite.anchor.set(0.5, 0.5);
         this.wudiSprite.animationSpeed = 0.15;
         this.wudiSprite.play();
         this.application.stage.addChild(this.wudiSprite);
@@ -458,7 +469,7 @@
             animationPosition[constants.animations[item]]
           );
           tankDir.animationSpeed = 0.2;
-          tankDir.anchor.set(0.5,0.5);
+          tankDir.anchor.set(0.5, 0.5);
           tankDir.play();
           tankDir.visible =
             constants.animations[item] === constants.animations.INIT_TANK_DOWN;
@@ -483,6 +494,7 @@
           .add("spaceship", "tankedazhan.json");
         that.loader.load((loader, resource) => {
           const id = resource.spaceship.spritesheet.animations;
+          this.panel();
           this.birth(id);
           this.materials();
           this.application.ticker.add(function (delta) {
@@ -510,7 +522,7 @@
         rightWall.beginFill(0xde3249);
         rightWall.drawRect(0, 0, 5, this.height);
         rightWall.endFill();
-        rightWall.position.set(this.width - 5, 0);
+        rightWall.position.set(this.width - 145, 0);
         container.addChild(rightWall);
 
         const topWall = new PIXI.Graphics();
@@ -544,8 +556,6 @@
         const { x, y, width, height } = this.player;
         const gunX = x + width;
         const gunY = y + height;
-        // console.log(x,width,y,height);
-        // console.log(gunX,gunY)
         if (this.gun.children.length === 0 && this.gun.children < 2) {
           const graphics = new PIXI.Graphics();
           graphics.beginFill(0xffffff);
@@ -612,18 +622,36 @@
         this.badTankContainer = new PIXI.Container();
       };
 
+      TankWar.prototype.panel = function () {
+        const id = this.loader.resources;
+        console.log(id);
+        this.panelContainer = new PIXI.Container();
+        const graphics = new PIXI.Graphics();
+        graphics.beginFill(0xcccccc);
+        graphics.drawRect(0, 0, 140, this.height);
+        graphics.endFill();
+        graphics.zIndex = 1;
+        this.panelContainer.addChild(graphics);
+        this.panelContainer.position.set(this.width - 140,0)
+        this.panelContainer.addChild(graphics);
+        
+        for(let i =0;i<20;i++){
+          const badLift = new PIXI.Sprite();
+        }
+        this.application.stage.addChild(this.panelContainer);
+      }
+
       TankWar.prototype.materials = function () {
         const { materials } = constants.texture;
         const id = this.loader.resources.spaceship.spritesheet;
         this.zhuangbeiContainer = new PIXI.Container();
-        this.zhuangbeiContainer.scale.set(2, 2);
-        console.log( this.zhuangbeiContainer);
         Object.keys(materials).map((item, i) => {
           const zhuangbei = new PIXI.Sprite(id.textures[materials[item]]);
-          // zhuangbei.visible = false;
-          zhuangbei.position.set(40 * (i + 1), 40 * (i + 1));
+          zhuangbei.visible = false;
+          zhuangbei.position.set(80 * (i + 1), 40 * (i + 1));
           zhuangbei.name = materials[item];
           zhuangbei.anchor.set(0.5, 0.5);
+          zhuangbei.scale.set(2, 2);
           this.zhuangbeiContainer.addChild(zhuangbei);
         });
         this.application.stage.addChild(this.zhuangbeiContainer);
