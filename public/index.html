@@ -17,7 +17,7 @@
   <body>
     <div id="box"></div>
     <div id="zuobiao">0,0</div>
-    <script src="https://pixijs.download/release/pixi.js"></script>
+    <script src="./js/pixi.js"></script>
     <script>
       // 获取坐标
       document.getElementById("box").onmousemove = (e) => {
@@ -422,7 +422,7 @@
         const birthContainer = new PIXI.Container();
         birthContainer.name = BIRTH_CONTAINER;
         for (let i = 0; i < 5; i++) {
-          const birthAnimation = new PIXI.AnimatedSprite(id[BIRTH]);
+          const birthAnimation = new PIXI.AnimatedSprite(id.animations[BIRTH]);
           birthAnimation.name = `birthAnimation-${i}`;
           if (i === 4) {
             birthAnimation.position.set(20, 30);
@@ -444,8 +444,8 @@
         birthContainer.getChildByName("birthAnimation-4").visible = true;
         setTimeout(() => {
           birthContainer.getChildByName("birthAnimation-4").visible = false;
-          this.wudi(id, 20, 30);
-          this.createdPlayer(id, 20, 30);
+          this.wudi(id.animations, 20, 30);
+          this.createdPlayer(id.animations, 20, 30);
         }, 2000);
       };
 
@@ -493,10 +493,10 @@
           .add("tank", "./tankedazhan.png")
           .add("spaceship", "tankedazhan.json");
         that.loader.load((loader, resource) => {
-          const id = resource.spaceship.spritesheet.animations;
-          this.panel();
+          const id = resource.spaceship.spritesheet;
+          this.panel(id);
           this.birth(id);
-          this.materials();
+          this.materials(id);
           this.application.ticker.add(function (delta) {
             that.play(delta);
           });
@@ -622,23 +622,49 @@
         this.badTankContainer = new PIXI.Container();
       };
 
-      TankWar.prototype.panel = function () {
-        const id = this.loader.resources;
-        console.log(id);
+      TankWar.prototype.panel = function (id) {
         this.panelContainer = new PIXI.Container();
         const graphics = new PIXI.Graphics();
         graphics.beginFill(0xcccccc);
         graphics.drawRect(0, 0, 140, this.height);
         graphics.endFill();
         graphics.zIndex = 1;
-        this.panelContainer.addChild(graphics);
         this.panelContainer.position.set(this.width - 140,0)
         this.panelContainer.addChild(graphics);
-        
+
+        const badTankLift = new PIXI.ParticleContainer();
+        const playerHealth = new PIXI.ParticleContainer();
+        playerHealth.position.set(20,300);
+        badTankLift.position.set(20,20);
+
         for(let i =0;i<20;i++){
-          const badLift = new PIXI.Sprite();
+          const badLift = new PIXI.Sprite(id.textures["jifenban-difangtank.png"]);
+          badLift.scale.set(2,2);
+          if(i % 2=== 0){
+            badLift.position.set(0, 10 * i);
+          }else {
+            badLift.position.set(20,10 * i);
+          }
+          
+          badTankLift.addChild(badLift);
         }
+
+        const labelIcon = new PIXI.Sprite(id.textures["home-2.png"]);
+        for(let i = 0; i<3;i++) {
+          const Health = new PIXI.Sprite(id.textures["jifenban-title.png"]);
+          Health.scale.set(2,2);
+          
+          Health.position.set(17 * i,40);
+          playerHealth.addChild(Health);
+        }
+        labelIcon.scale.set(2,2);
+        playerHealth.addChild(labelIcon);
+        this.panelContainer.addChild(badTankLift);
+        this.panelContainer.addChild(playerHealth);
+
         this.application.stage.addChild(this.panelContainer);
+
+
       }
 
       TankWar.prototype.materials = function () {
@@ -659,7 +685,7 @@
 
       const tankWar = new TankWar({
         width: 880,
-        height: 800,
+        height: 400,
         element: "box",
       });
     </script>
