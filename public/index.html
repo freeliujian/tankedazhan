@@ -30,30 +30,38 @@
         ).innerHTML = `${zuobiao.x},${zuobiao.y}`;
       };
 
-      // const level = {
-      //   level1:[
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      //   ]
-      // }
+      const stage = {
+        stage1:[
+          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,3,3,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,3,3,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0],
+          [0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+          [1,1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,1,1],
+          [3,3,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,3,3],
+          [0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0],
+          [0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0],
+          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+      }
       const materials = {
         wall: 1,
         grass: 2,
@@ -193,23 +201,27 @@
         this.wudiSprite = null;
         this.zhuangbeiContainer = null;
         this.badTankContainer = null;
+        this.mapContainer = null;
+        this.application = null;
+        this.gun = null;
+        this.panelContainer = null;
+        this.wallArr = null;
+        //目前关卡，为0为未开始
+        this.currentStage = 1;
         this.status = {
           init: 0,
           padding: 1,
           paddingEnd: 2,
         };
         this.direction = {
-          upIsDown: false,
+          upIsDown: true,
           leftIsDown: true,
-          downIsDown: true,
+          downIsDown: false,
           rightIsDown: true,
         };
         this.life = 1;
         this.score = 0;
-        this.application = null;
-        this.gun = null;
-        this.panelContainer = null;
-        this.wallArr = null;
+       
         this.init();
       }
 
@@ -420,36 +432,45 @@
       TankWar.prototype.birth = function (id) {
         const { BIRTH, BIRTH_CONTAINER } = constants.animations;
         const birthContainer = new PIXI.Container();
+        const initPosition = {
+          x: this.width / 2 - 150,
+          y: this.height - 25,
+        };
         birthContainer.name = BIRTH_CONTAINER;
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
           const birthAnimation = new PIXI.AnimatedSprite(id.animations[BIRTH]);
           birthAnimation.name = `birthAnimation-${i}`;
-          if (i === 4) {
-            birthAnimation.position.set(20, 30);
-          } else {
-            birthAnimation.x = i * 100;
-            birthAnimation.y = 10;
-          }
+          // if (i === 0) {
+          //   birthAnimation.position.set(20, 20);
+          // }
+          // if (i === 1) {
+          //   birthAnimation.position.set(this.width / 2 - 80, 20);
+          // }
+          // if (i === 2) {
+          //   birthAnimation.position.set(this.width - 160, 20);
+          // }
+          if (i === 3) {
+            birthAnimation.position.set(initPosition.x, initPosition.y);
+          } 
           birthAnimation.anchor.set(0.5, 0.5);
+          birthAnimation.scale.set(1.2, 1.2);
           birthAnimation.visible = false;
           birthAnimation.animationSpeed = 0.1;
           birthAnimation.play();
           birthContainer.addChild(birthAnimation);
         }
-        birthContainer.scale.x = 1.2;
-        birthContainer.scale.y = 1.2;
         this.application.stage.addChild(birthContainer);
-        birthContainer.getChildByName("birthAnimation-4");
-        console.log(birthContainer.getChildByName("birthAnimation-4"));
-        birthContainer.getChildByName("birthAnimation-4").visible = true;
+        birthContainer.getChildByName("birthAnimation-3");
+        birthContainer.getChildByName("birthAnimation-3").visible = true;
         setTimeout(() => {
-          birthContainer.getChildByName("birthAnimation-4").visible = false;
-          this.wudi(id.animations, 20, 30);
-          this.createdPlayer(id.animations, 20, 30);
+          birthContainer.getChildByName("birthAnimation-3").visible = false;
+          this.wudi(id.animations, initPosition);
+          this.createdPlayer(id.animations, initPosition);
         }, 2000);
       };
 
-      TankWar.prototype.wudi = function (animationPosition, x, y) {
+      TankWar.prototype.wudi = function (animationPosition, initPosition) {
+        const { x, y } = initPosition;
         this.wudiSprite = new PIXI.AnimatedSprite(
           animationPosition[constants.animations.WUDI]
         );
@@ -461,7 +482,11 @@
         this.application.stage.addChild(this.wudiSprite);
       };
 
-      TankWar.prototype.createdPlayer = function (animationPosition, x, y) {
+      TankWar.prototype.createdPlayer = function (
+        animationPosition,
+        initPosition
+      ) {
+        const { x, y } = initPosition;
         const { vx, vy } = defaultSpeed;
         this.player = new PIXI.Container();
         Object.keys(constants.animations).forEach((item, index) => {
@@ -472,7 +497,7 @@
           tankDir.anchor.set(0.5, 0.5);
           tankDir.play();
           tankDir.visible =
-            constants.animations[item] === constants.animations.INIT_TANK_DOWN;
+            constants.animations[item] === constants.animations.INIT_TANK_UP;
           tankDir.name = constants.animations[item];
           this.player.addChild(tankDir);
         });
@@ -494,6 +519,7 @@
           .add("spaceship", "tankedazhan.json");
         that.loader.load((loader, resource) => {
           const id = resource.spaceship.spritesheet;
+          this.createMap(id);
           this.panel(id);
           this.birth(id);
           this.materials(id);
@@ -512,28 +538,28 @@
         this.application.stage.addChild(container);
 
         const leftWall = new PIXI.Graphics();
-        leftWall.beginFill(0xde3249);
+        leftWall.beginFill(0xcccccc);
         leftWall.drawRect(0, 0, 5, this.height);
         leftWall.position.set(0, 0);
         leftWall.endFill();
         container.addChild(leftWall);
 
         const rightWall = new PIXI.Graphics();
-        rightWall.beginFill(0xde3249);
+        rightWall.beginFill(0xcccccc);
         rightWall.drawRect(0, 0, 5, this.height);
         rightWall.endFill();
         rightWall.position.set(this.width - 145, 0);
         container.addChild(rightWall);
 
         const topWall = new PIXI.Graphics();
-        topWall.beginFill(0xde3249);
+        topWall.beginFill(0xcccccc);
         topWall.drawRect(0, 0, this.width, 5);
         topWall.position.set(0, 0);
         topWall.endFill();
         container.addChild(topWall);
 
         const bottomWall = new PIXI.Graphics();
-        bottomWall.beginFill(0xde3249);
+        bottomWall.beginFill(0xcccccc);
         bottomWall.drawRect(0, 0, this.width, 5);
         bottomWall.position.set(0, this.height - 5);
         bottomWall.endFill();
@@ -629,42 +655,107 @@
         graphics.drawRect(0, 0, 140, this.height);
         graphics.endFill();
         graphics.zIndex = 1;
-        this.panelContainer.position.set(this.width - 140,0)
+        this.panelContainer.position.set(this.width - 140, 0);
         this.panelContainer.addChild(graphics);
-
+        //地方坦克计分板
         const badTankLift = new PIXI.ParticleContainer();
-        const playerHealth = new PIXI.ParticleContainer();
-        playerHealth.position.set(20,300);
-        badTankLift.position.set(20,20);
-
-        for(let i =0;i<20;i++){
-          const badLift = new PIXI.Sprite(id.textures["jifenban-difangtank.png"]);
-          badLift.scale.set(2,2);
-          if(i % 2=== 0){
+        badTankLift.position.set(20, 20);
+        for (let i = 0; i < 20; i++) {
+          const badLift = new PIXI.Sprite(
+            id.textures["jifenban-difangtank.png"]
+          );
+          badLift.scale.set(2, 2);
+          if (i % 2 === 0) {
             badLift.position.set(0, 10 * i);
-          }else {
-            badLift.position.set(20,10 * i);
+          } else {
+            badLift.position.set(20, 10 * i);
           }
-          
+
           badTankLift.addChild(badLift);
         }
 
+        //玩家坦克剩余命数
+        const playerHealth = new PIXI.ParticleContainer();
+        playerHealth.position.set(20, 300);
         const labelIcon = new PIXI.Sprite(id.textures["home-2.png"]);
-        for(let i = 0; i<3;i++) {
+        for (let i = 0; i < 3; i++) {
           const Health = new PIXI.Sprite(id.textures["jifenban-title.png"]);
-          Health.scale.set(2,2);
-          
-          Health.position.set(17 * i,40);
+          Health.scale.set(2, 2);
+
+          Health.position.set(17 * i, 40);
           playerHealth.addChild(Health);
         }
-        labelIcon.scale.set(2,2);
+        labelIcon.scale.set(2, 2);
         playerHealth.addChild(labelIcon);
+
+        const TextStyle = new PIXI.TextStyle({
+          fontFamily: "Arial",
+          fontSize: 24,
+          fill: 0x000000,
+          align: "center",
+        });
+
+        // 现在是第几关
+        const text = new PIXI.Text("stage 1", TextStyle);
+        text.position.set(20, 400);
+
+        this.panelContainer.addChild(text);
         this.panelContainer.addChild(badTankLift);
         this.panelContainer.addChild(playerHealth);
 
         this.application.stage.addChild(this.panelContainer);
+      };
 
-
+      TankWar.prototype.createMap = function (id) {
+        console.log(this.application)
+        this.mapContainer = new PIXI.Container();
+        this.mapContainer.position.set(14,10);
+        if(this.currentStage !=0){
+          const currentStageRow = stage[`stage${this.currentStage}`];
+          for(let row =0;row<currentStageRow.length;row++){
+            const currentStageColumn = stage[`stage${this.currentStage}`][row];
+            console.log(currentStageColumn)
+            for(let col = 0;col<currentStageColumn.length;col++){
+              if(currentStageColumn[col] === 1) {
+                  const wall = new PIXI.Sprite(id.textures['map-dixing-qiang.png']);
+                  wall.position.set( col * 16,row * 16);
+                  wall.scale.set(2,2);
+                  wall.anchor.set(0.5,0.5);
+                  this.mapContainer.addChild(wall);
+                  console.log(currentStageColumn[col])
+                  console.log(wall.x,wall.y)
+              }
+              if(currentStageColumn[col] === 2){
+                  const grass = new PIXI.Sprite(id.textures['map-dixing-cao.png']);
+                  wall.position.set( col * 16,row * 16);
+                  wall.scale.set(2,2);
+                  wall.anchor.set(0.5,0.5);
+                  this.mapContainer.addChild(wall);
+                  console.log(currentStageColumn[col])
+                  console.log(wall.x,wall.y)
+              }
+              if(currentStageColumn[col] === 3){
+                  const wall = new PIXI.Sprite(id.textures['map-dixing-gang.png']);
+                  wall.position.set( col * 16,row * 16);
+                  wall.scale.set(2,2);
+                  wall.anchor.set(0.5,0.5);
+                  this.mapContainer.addChild(wall);
+                  console.log(currentStageColumn[col])
+                  console.log(wall.x,wall.y)
+              }
+              if(currentStageColumn[col] === 4){
+                  const river = new PIXI.Sprite(id.textures['map-dixing-heliu.png']);
+                  wall.position.set( col * 16,row * 16);
+                  wall.scale.set(2,2);
+                  wall.anchor.set(0.5,0.5);
+                  this.mapContainer.addChild(wall);
+                  console.log(currentStageColumn[col])
+                  console.log(wall.x,wall.y)
+              }
+            }
+          }
+        }
+        this.application.stage.addChild(this.mapContainer);
       }
 
       TankWar.prototype.materials = function () {
@@ -684,8 +775,8 @@
       };
 
       const tankWar = new TankWar({
-        width: 880,
-        height: 400,
+        width: 570,
+        height: 460,
         element: "box",
       });
     </script>
