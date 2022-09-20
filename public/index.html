@@ -240,7 +240,10 @@
         const { gun, wallArr, removeGun, zhuangbeiContainer } = this;
         const { children } = gun;
         const { leftWall, rightWall, topWall, bottomWall } = wallArr;
+
         const zhuangbeiName = constants.texture.materials;
+        const mapContainerArr = this.mapContainer.children
+   
         const score = zhuangbeiContainer.getChildByName(
           zhuangbeiName.ZHUANGBEI_FENSHU
         );
@@ -251,40 +254,36 @@
           zhuangbeiName.ZHUANGBEI_SHENGJI
         );
         const timeStop = zhuangbeiContainer.getChildByName(
-          constants.texture.materials.ZHUANGBEI_SHIJIANZANTING
+          zhuangbeiName.ZHUANGBEI_SHIJIANZANTING
         );
         const handGun = zhuangbeiContainer.getChildByName(
-          constants.texture.materials.ZHUANGBEI_SHOUQIANG
+          zhuangbeiName.ZHUANGBEI_SHOUQIANG
         );
         const invincible = zhuangbeiContainer.getChildByName(
-          constants.texture.materials.ZHUANGBEI_TOUKUI
+          zhuangbeiName.ZHUANGBEI_TOUKUI
         );
         const allBoom = zhuangbeiContainer.getChildByName(
-          constants.texture.materials.ZHUANGBEI_ZHADAN
+          zhuangbeiName.ZHUANGBEI_ZHADAN
         );
 
+        //是否发射子弹
         if (children.length !== 0) {
           const getGun = gun.getChildAt(0);
+          const wallChildren = this.wallArr.wall.children;
           getGun.x += getGun.vx;
           getGun.y += getGun.vy;
-          if (hitTestRectangle(getGun, leftWall)) {
-            console.log("leftWall");
+          for(let i =0;i<children.length;i++){
+            if (hitTestRectangle(getGun, wallChildren[i])) {
+              removeGun.apply(this,gun)
+            }
+          };
 
-            removeGun.apply(this, gun);
+          for(let i = 0; i < mapContainerArr.length;i++){
+            if(hitTestRectangle(getGun,mapContainerArr[i])){
+              this.removeWall(mapContainerArr[i]);
+            }
           }
-          if (hitTestRectangle(getGun, rightWall)) {
-            console.log("rightWall");
-            removeGun.apply(this, gun);
-          }
-          if (hitTestRectangle(getGun, topWall)) {
-            console.log("topWall");
-            removeGun.apply(this, gun);
-          }
-          if (hitTestRectangle(getGun, bottomWall)) {
-            console.log("bottomWall");
-            removeGun.apply(this, gun);
-          }
-        }
+        };
 
         if (this.zhuangbeiContainer && this.player && score) {
           if (hitTestRectangle(this.player, score) && score.visible) {
@@ -536,29 +535,29 @@
       };
 
       TankWar.prototype.createAirWall = function () {
-        const container = new PIXI.Container();
-        this.application.stage.addChild(container);
+        const wall = new PIXI.Container();
+        this.application.stage.addChild(wall);
 
         const leftWall = new PIXI.Graphics();
         leftWall.beginFill(0xcccccc);
         leftWall.drawRect(0, 0, 5, this.height);
         leftWall.position.set(0, 0);
         leftWall.endFill();
-        container.addChild(leftWall);
+        wall.addChild(leftWall);
 
         const rightWall = new PIXI.Graphics();
         rightWall.beginFill(0xcccccc);
         rightWall.drawRect(0, 0, 5, this.height);
         rightWall.endFill();
         rightWall.position.set(this.width - 145, 0);
-        container.addChild(rightWall);
+        wall.addChild(rightWall);
 
         const topWall = new PIXI.Graphics();
         topWall.beginFill(0xcccccc);
         topWall.drawRect(0, 0, this.width, 5);
         topWall.position.set(0, 0);
         topWall.endFill();
-        container.addChild(topWall);
+        wall.addChild(topWall);
 
         const bottomWall = new PIXI.Graphics();
         bottomWall.beginFill(0xcccccc);
@@ -567,14 +566,14 @@
         bottomWall.endFill();
 
         this.wallArr = {
-          wall: container,
+          wall: wall,
           leftWall: leftWall,
           rightWall: rightWall,
           topWall: topWall,
           bottomWall: bottomWall,
         };
 
-        container.addChild(bottomWall);
+        wall.addChild(bottomWall);
       };
 
       TankWar.prototype.fire = function () {
@@ -621,6 +620,12 @@
         gun.removeChildren();
         this.boom(getGun.x, getGun.y);
       };
+
+      TankWar.prototype.removeWall = function (wall) {
+        this.removeGun();
+        this.mapContainer.removeChild(wall);
+        console.log(wall)
+      }
 
       TankWar.prototype.boom = function (x, y) {
         const { BOOM } = constants.animations;
@@ -709,14 +714,12 @@
       };
 
       TankWar.prototype.createMap = function (id) {
-        console.log(this.application)
         this.mapContainer = new PIXI.Container();
         this.mapContainer.position.set(14,10);
         if(this.currentStage !=0){
           const currentStageRow = stage[`stage${this.currentStage}`];
           for(let row =0;row<currentStageRow.length;row++){
             const currentStageColumn = stage[`stage${this.currentStage}`][row];
-            console.log(currentStageColumn)
             for(let col = 0;col<currentStageColumn.length;col++){
               if(currentStageColumn[col] === 1) {
                   const wall = new PIXI.Sprite(id.textures['map-dixing-qiang.png']);
@@ -724,8 +727,6 @@
                   wall.scale.set(2,2);
                   wall.anchor.set(0.5,0.5);
                   this.mapContainer.addChild(wall);
-                  console.log(currentStageColumn[col])
-                  console.log(wall.x,wall.y)
               }
               if(currentStageColumn[col] === 2){
                   const grass = new PIXI.Sprite(id.textures['map-dixing-cao.png']);
@@ -733,8 +734,6 @@
                   wall.scale.set(2,2);
                   wall.anchor.set(0.5,0.5);
                   this.mapContainer.addChild(wall);
-                  console.log(currentStageColumn[col])
-                  console.log(wall.x,wall.y)
               }
               if(currentStageColumn[col] === 3){
                   const wall = new PIXI.Sprite(id.textures['map-dixing-gang.png']);
@@ -742,8 +741,6 @@
                   wall.scale.set(2,2);
                   wall.anchor.set(0.5,0.5);
                   this.mapContainer.addChild(wall);
-                  console.log(currentStageColumn[col])
-                  console.log(wall.x,wall.y)
               }
               if(currentStageColumn[col] === 4){
                   const river = new PIXI.Sprite(id.textures['map-dixing-heliu.png']);
@@ -751,12 +748,11 @@
                   wall.scale.set(2,2);
                   wall.anchor.set(0.5,0.5);
                   this.mapContainer.addChild(wall);
-                  console.log(currentStageColumn[col])
-                  console.log(wall.x,wall.y)
               }
             }
           }
         }
+        console.log(this.mapContainer);
         this.application.stage.addChild(this.mapContainer);
       }
 
