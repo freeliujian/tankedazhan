@@ -57,7 +57,7 @@
           [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0, 1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -310,6 +310,7 @@
 
           for(let i = 0; i < mapContainerArr.length;i++){
             if(hitTestRectangle(getGun,mapContainerArr[i])){
+              // console.log(mapContainerArr[i].x,mapContainerArr[i].y, getGun.x,getGun.y);
               this.removeWall(mapContainerArr[i]);
             }
           }
@@ -363,6 +364,13 @@
           this.wudiSprite.y += this.player.vy;
         }
       };
+
+      TankWar.prototype.settingSpriteAttribute = function(sprite,x,y) {
+        sprite.position.set( x ,y);
+        sprite.scale.set(2,2);
+        sprite.anchor.set(0.5,0.5);
+        return sprite;
+      }
 
       TankWar.prototype.tankDirection = function (dir) {
         const playerDir = this.player.children;
@@ -746,37 +754,34 @@
         this.mapContainer = new PIXI.Container();
         this.mapContainer.position.set(14,10);
         if(this.currentStage !=0){
+          const settingWallAttribute = (sprite, x, y) => {
+            this.settingSpriteAttribute(sprite,  x * 16,y * 16);
+            return sprite;
+          }
+
           const currentStageRow = stage[`stage${this.currentStage}`];
           for(let row =0;row<currentStageRow.length;row++){
             const currentStageColumn = stage[`stage${this.currentStage}`][row];
             for(let col = 0;col<currentStageColumn.length;col++){
               if(currentStageColumn[col] === 1) {
                   const wall = new PIXI.Sprite(id.textures['map-dixing-qiang.png']);
-                  console.log(col,row)
-                  wall.position.set( col * 16,row * 16);
-                  wall.scale.set(2,2);
-                  wall.anchor.set(0.5,0.5);
+                  console.log(col * 16,row * 16, col, row);
+                  settingWallAttribute(wall,col,row);
                   this.mapContainer.addChild(wall);
               }
               if(currentStageColumn[col] === 2){
                   const grass = new PIXI.Sprite(id.textures['map-dixing-cao.png']);
-                  wall.position.set( col * 16,row * 16);
-                  wall.scale.set(2,2);
-                  wall.anchor.set(0.5,0.5);
+                  settingWallAttribute(wall,col,row);
                   this.mapContainer.addChild(wall);
               }
               if(currentStageColumn[col] === 3){
                   const wall = new PIXI.Sprite(id.textures['map-dixing-gang.png']);
-                  wall.position.set( col * 16,row * 16);
-                  wall.scale.set(2,2);
-                  wall.anchor.set(0.5,0.5);
+                  settingWallAttribute(wall,col,row);
                   this.mapContainer.addChild(wall);
               }
               if(currentStageColumn[col] === 4){
                   const river = new PIXI.Sprite(id.textures['map-dixing-heliu.png']);
-                  wall.position.set( col * 16,row * 16);
-                  wall.scale.set(2,2);
-                  wall.anchor.set(0.5,0.5);
+                  settingWallAttribute(wall,col,row);
                   this.mapContainer.addChild(wall);
               }
             }
