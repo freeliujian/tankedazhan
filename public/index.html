@@ -340,6 +340,24 @@
         return arr.filter(item => regex.test(item.name));
       },
 
+      TankWar.prototype.settingSpriteAttribute = function(sprite,x,y) {
+        sprite.position.set(x ,y);
+        sprite.scale.set(2,2);
+        sprite.anchor.set(0.5,0.5);
+        return sprite;
+      }
+
+      TankWar.prototype.tankDirection = function (dir) {
+        const playerDir = this.player.children;
+        for (let i = 0; i < playerDir.length; i++) {
+          if (playerDir[i].name === dir) {
+            playerDir[i].visible = true;
+          } else {
+            playerDir[i].visible = false;
+          }
+        }
+      };
+
       TankWar.prototype.play = function (delta) {
         const { gun, wallArr, removeGun, zhuangbeiContainer, player, direction, directionFlag,  filterRegexName } = this;
         const { children } = gun;
@@ -413,33 +431,6 @@
           }
         }
 
-        const isMove = () => {
-          const { initRegex , level2Regex, level3Regex, downRegex, upRegex, rightRegex, leftRegex } = regex;
-          if(player) {
-            const {currentTank} = this.getCurrentTank(this.player, this);
-           
-            mapContainerArr.forEach(wall => {
-              if(hitTestRectangle(currentTank,wall)){
-                currentDirectionIsMove(currentTank,wall);
-              }
-            })
-          }
-        }
-
-        const currentDirectionIsMove = (tank, wall) => {
-          console.log( hitTestRectangle(tank, wall));
-          const { downIs, upIs, leftIs, rightIs } = directionFlag;
-          if(hitTestRectangle(tank, wall)) {
-            if(!leftIs || !rightIs) {
-              this.player.vy = 0;
-            }
-            if( downIs || upIs) {
-              this.player.vx = 0;
-            }
-          }
-          // console.log(this.directionFlag);
-        }
-
         if (!!this.player) {
           const tankAggregation = this.player.children;
           tankAggregation.forEach(tank => {
@@ -452,25 +443,6 @@
             this.wudiSprite.y += this.player.vy;
           }
 
-          isMove()
-        }
-      };
-
-      TankWar.prototype.settingSpriteAttribute = function(sprite,x,y) {
-        sprite.position.set(x ,y);
-        sprite.scale.set(2,2);
-        sprite.anchor.set(0.5,0.5);
-        return sprite;
-      }
-
-      TankWar.prototype.tankDirection = function (dir) {
-        const playerDir = this.player.children;
-        for (let i = 0; i < playerDir.length; i++) {
-          if (playerDir[i].name === dir) {
-            playerDir[i].visible = true;
-          } else {
-            playerDir[i].visible = false;
-          }
         }
       };
 
@@ -481,6 +453,36 @@
           down = keyboard("ArrowDown");
         keyz = keyboard("z");
 
+        const isMove = () => {
+          const { initRegex , level2Regex, level3Regex, downRegex, upRegex, rightRegex, leftRegex } = regex;
+          if(this.player && this.mapContainer) {
+            const mapContainerArr = this.mapContainer.children
+            const {currentTank} = this.getCurrentTank(this.player, this);
+            mapContainerArr.forEach(wall => {
+              if(hitTestRectangle(currentTank,wall)){
+                currentDirectionIsMove(currentTank,wall);
+              }
+            })
+          }
+        }
+
+        const currentDirectionIsMove = (tank, wall) => {
+          const { downIs, upIs, leftIs, rightIs } = this.directionFlag;
+          const { downIsDown, upIsDown, leftIsDown, rightIsDown } = this.direction;
+          if(!right.isDown) {
+            this.directionFlag.rightIs = false;
+          }
+          if(!left.isDown) {
+            this.directionFlag.leftIs = false;
+          }
+          if(!up.isDown) {
+            this.directionFlag.upIs = false;
+          }
+          if(!down.isDown) {
+            this.directionFlag.downIs = false;
+          }
+        }
+
         keyz.press = () => {
           this.fire();
         };
@@ -490,11 +492,12 @@
         };
       
         left.press = () => {
+          isMove()
+
           if(this.directionFlag.leftIs) {
             this.player.vx = -1;
             this.player.vy = 0;
             this.tankDirection(constants.animations.INIT_TANK_LEFT);
-            this.directionFlag.leftIs = false;
           }
         };
 
@@ -511,11 +514,14 @@
         };
 
         up.press = () => {
+          console.log(up.isDown, up.isUp);
+
+          isMove();
           if(this.directionFlag.upIs) {
+            console.log(this.directionFlag.upIs);
             this.player.vy = -1;
             this.player.vx = 0;
             this.tankDirection(constants.animations.INIT_TANK_UP);
-            this.directionFlag.upIs = false;
           }
         };
         up.release = () => {
@@ -531,11 +537,12 @@
         };
 
         right.press = () => {
+          isMove()
+
           if(this.directionFlag.rightIs) {
             this.player.vx = 1;
             this.player.vy = 0;
             this.tankDirection(constants.animations.INIT_TANK_RIGHT);
-            this.directionFlag.rightIs = false;
           }
         };
         right.release = () => {
@@ -551,11 +558,12 @@
         };
 
         down.press = () => {
+          isMove()
+
           if(this.directionFlag.downIs) {
             this.player.vy = 1;
             this.player.vx = 0;
             this.tankDirection(constants.animations.INIT_TANK_DOWN);
-            this.directionFlag.downIs = false;
           }
         };
         down.release = () => {
