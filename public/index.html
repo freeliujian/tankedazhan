@@ -362,6 +362,7 @@
         const { gun, wallArr, removeGun, zhuangbeiContainer, player, direction, directionFlag,  filterRegexName } = this;
         const { children } = gun;
         const { leftWall, rightWall, topWall, bottomWall } = wallArr;
+        const wallChildren = wallArr.wall.children;
 
         const zhuangbeiName = constants.texture.materials;
         const mapContainerArr = this.mapContainer.children
@@ -432,10 +433,39 @@
         }
 
         if (!!this.player) {
+
           const tankAggregation = this.player.children;
+          const mapContainerArr = this.mapContainer.children
+          const {currentTank} = this.getCurrentTank(this.player, this);    
+          let stopMove = true;
+
           tankAggregation.forEach(tank => {
-            tank.x += this.player.vx;
-            tank.y += this.player.vy;
+            mapContainerArr.forEach(wall => {
+              if(hitTestRectangle(currentTank,wall)){
+                tank.vx = 0;
+                tank.vy = 0;
+                stopMove= false;
+                this.directionFlag = {
+                  upIs: true,
+                  leftIs: true,
+                  downIs: true,
+                  rightIs: true,
+                }
+              }
+
+              wallChildren.forEach(wall => {
+                if (hitTestRectangle(tank, wall)) {
+                    tank.vx = 0;
+                    tank.vy = 0;
+                    stopMove= false;
+                }
+              });
+            })
+
+            if(stopMove) {
+              tank.x += this.player.vx;
+              tank.y += this.player.vy;
+            }
           })
 
           if (!!this.wudiSprite) {
@@ -483,6 +513,11 @@
           }
         }
 
+        const setSpeed = (vx,vy) => {
+          this.player.vx = vx; 
+          this.player.vy = vy;
+        }
+
         keyz.press = () => {
           this.fire();
         };
@@ -492,11 +527,11 @@
         };
       
         left.press = () => {
-          isMove()
+          //isMove()
 
           if(this.directionFlag.leftIs) {
-            this.player.vx = -1;
-            this.player.vy = 0;
+            setSpeed(-1,0);
+          
             this.tankDirection(constants.animations.INIT_TANK_LEFT);
           }
         };
@@ -516,11 +551,11 @@
         up.press = () => {
           console.log(up.isDown, up.isUp);
 
-          isMove();
+          //isMove();
           if(this.directionFlag.upIs) {
             console.log(this.directionFlag.upIs);
-            this.player.vy = -1;
-            this.player.vx = 0;
+            setSpeed(0,-1);
+       
             this.tankDirection(constants.animations.INIT_TANK_UP);
           }
         };
@@ -537,11 +572,10 @@
         };
 
         right.press = () => {
-          isMove()
+          //isMove()
 
           if(this.directionFlag.rightIs) {
-            this.player.vx = 1;
-            this.player.vy = 0;
+            setSpeed(1,0);
             this.tankDirection(constants.animations.INIT_TANK_RIGHT);
           }
         };
@@ -558,9 +592,10 @@
         };
 
         down.press = () => {
-          isMove()
+          //isMove()
 
           if(this.directionFlag.downIs) {
+            setSpeed(0,1);
             this.player.vy = 1;
             this.player.vx = 0;
             this.tankDirection(constants.animations.INIT_TANK_DOWN);
