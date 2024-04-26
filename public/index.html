@@ -191,6 +191,45 @@
         return hit;
       }
 
+      filterRegexName = function(arr, regex) {
+        return arr.filter(item => regex.test(item.name));
+      },
+
+      getCurrentTank = (player, container) => {
+        const { direction, level } = container;
+        const { initRegex , level2Regex, level3Regex, downRegex, upRegex, rightRegex, leftRegex } = regex;
+        const getTankArray = player.children;
+        let initTankArray, level2TankArray, level3TankArray = [];
+        let currentTankStatus = null;
+        let currentTankDirection = 'up'; 
+        initTankArray = filterRegexName(getTankArray, initRegex);
+        level2TankArray = filterRegexName(getTankArray, level2Regex);
+        level3TankArray = filterRegexName(getTankArray, level3Regex);
+        if(level === 1) {
+          if(!direction.downIsDown) {
+            currentTankStatus = filterRegexName(initTankArray, upRegex)[0];
+            currentTankDirection = 'up';
+          }
+          if(!direction.upIsDown) {
+            currentTankStatus = filterRegexName(initTankArray, downRegex)[0];
+            currentTankDirection = 'down';
+          }
+          if(!direction.leftIsDown) {
+            currentTankStatus = filterRegexName(initTankArray, rightRegex)[0];
+            currentTankDirection = 'right';
+          }
+          if(!direction.rightIsDown) {
+            currentTankStatus = filterRegexName(initTankArray, leftRegex)[0];
+            currentTankDirection = 'left';
+          }
+        }
+        return {
+          currentTankDirection,
+          currentTank: currentTankStatus,
+          tankAggregation: getTankArray,
+        };
+      };
+
       function keyboard(value) {
         let key = {};
         key.value = value;
@@ -275,35 +314,6 @@
         this.init();
       }
 
-      TankWar.prototype.getCurrentTank = (player, container) => {
-        const { direction, level, filterRegexName } = container;
-        const { initRegex , level2Regex, level3Regex, downRegex, upRegex, rightRegex, leftRegex } = regex;
-        const getTankArray = player.children;
-        let initTankArray, level2TankArray, level3TankArray = [];
-        let currentTankStatus = null;
-        initTankArray = filterRegexName(getTankArray, initRegex);
-        level2TankArray = filterRegexName(getTankArray, level2Regex);
-        level3TankArray =filterRegexName(getTankArray, level3Regex);
-        if(level === 1) {
-          if(!direction.downIsDown) {
-            currentTankStatus = filterRegexName(initTankArray, upRegex)[0];
-          }
-          if(!direction.upIsDown) {
-            currentTankStatus = filterRegexName(initTankArray, downRegex)[0];
-          }
-          if(!direction.leftIsDown) {
-            currentTankStatus = filterRegexName(initTankArray, rightRegex)[0];
-          }
-          if(!direction.rightIsDown) {
-            currentTankStatus = filterRegexName(initTankArray, leftRegex)[0];
-          }
-        }
-        return {
-          currentTank: currentTankStatus,
-          tankAggregation: getTankArray,
-        };
-      },
-
       TankWar.prototype.init = function () {
         const { width, height, element } = this;
 
@@ -335,10 +345,6 @@
           this.createAirWall();
         });
       };
-
-      TankWar.prototype.filterRegexName = function(arr, regex) {
-        return arr.filter(item => regex.test(item.name));
-      },
 
       TankWar.prototype.settingSpriteAttribute = function(sprite,x,y) {
         sprite.position.set(x ,y);
@@ -436,36 +442,86 @@
 
           const tankAggregation = this.player.children;
           const mapContainerArr = this.mapContainer.children
-          const {currentTank} = this.getCurrentTank(this.player, this);    
-          let stopMove = true;
+          const {currentTank, currentTankDirection} = getCurrentTank(this.player, this);
+          const { upIsDown, downIsDown, leftIsDown, rightIsDown } = this.direction;
 
           tankAggregation.forEach(tank => {
+            
             mapContainerArr.forEach(wall => {
+              if(!tank.colliding) {
+                tank.x += this.player.vx;
+                tank.y += this.player.vy;
+              }
+
               if(hitTestRectangle(currentTank,wall)){
+                tank.colliding = true;
                 tank.vx = 0;
                 tank.vy = 0;
-                stopMove= false;
-                this.directionFlag = {
-                  upIs: true,
-                  leftIs: true,
-                  downIs: true,
-                  rightIs: true,
-                }
+                tank.collideDirection = currentTankDirection;
+
+                // if (tank.colliding) {
+                //   // 如果离开碰撞方向，则恢复移动
+                //   switch (tank.collideDirection) {
+                //     case 'left':
+                //       if (tank.x + tank.width <= wall.x) {
+                //           tank.colliding = false;
+                //       }
+                //       break;
+                //     case 'right':
+                //       if (tank.x >= wall.x + wall.width) {
+                //           tank.colliding = false;
+                //       }
+                //       break;
+                //     case 'up':
+                //       if (tank.y + tank.height <= wall.y) {
+                //           tank.colliding = false;
+                //       }
+                //       break;
+                //     case 'down':
+                //       if (tank.y >= wall.y + wall.height) {
+                //           tank.colliding = false;
+                //       }
+                //       break;
+                //   }
+                // }
               }
 
               wallChildren.forEach(wall => {
                 if (hitTestRectangle(tank, wall)) {
-                    tank.vx = 0;
-                    tank.vy = 0;
-                    stopMove= false;
+                  tank.colliding = true;
+                  tank.vx = 0;
+                  tank.vy = 0;
+                  tank.collideDirection = currentTankDirection;
+
+                  if (tank.colliding) {
+                    // 如果离开碰撞方向，则恢复移动
+                    switch (tank.collideDirection) {
+                      case 'left':
+                        if (tank.x + tank.width <= wall.x) {
+                            tank.colliding = false;
+                        }
+                        break;
+                      case 'right':
+                        if (tank.x >= wall.x + wall.width) {
+                            tank.colliding = false;
+                        }
+                        break;
+                      case 'up':
+                        if (tank.y + tank.height <= wall.y) {
+                            tank.colliding = false;
+                        }
+                        break;
+                      case 'down':
+                        if (tank.y >= wall.y + wall.height) {
+                            tank.colliding = false;
+                        }
+                        break;
+                    }
+                  }
                 }
               });
             })
 
-            if(stopMove) {
-              tank.x += this.player.vx;
-              tank.y += this.player.vy;
-            }
           })
 
           if (!!this.wudiSprite) {
@@ -734,11 +790,13 @@
           tankDir.life = this.life;
           tankDir.scale.x = scale.X;
           tankDir.scale.y = scale.Y;
+          tankDir.colliding = false;
           tankDir.position.set(x, y);
           this.player.addChild(tankDir);
         });
         this.player.vx = vx;
         this.player.vy = vy;
+        console.log(this.player);
         this.application.stage.addChild(this.player);
       };
 
